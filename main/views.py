@@ -5,10 +5,12 @@ from .models import Alumno
 from itertools import combinations
 from rut_chile import rut_chile
 import csv
+from django.http import HttpRequest
+from django.shortcuts import redirect
 
 
 # Create your views here.
-def index(request):
+def index(request: HttpRequest):
     template = loader.get_template("index.html")
     form = AlumnoForm()
     if request.method == "POST":
@@ -43,7 +45,7 @@ def index(request):
 
 
 # Make view to export all almunos to a CSV file
-def export_alumnos(request):
+def export_alumnos(request: HttpRequest):
     response = HttpResponse(content_type="text/csv")
     response["Content-Disposition"] = 'attachment; filename="alumnos.csv"'
     alumnos = Alumno.objects.all()
@@ -55,6 +57,17 @@ def export_alumnos(request):
 
 
 # Make a view to delete all alumnos
-def delete_alumnos(request):
-    Alumno.objects.all().delete()
-    return HttpResponse("Alumnos eliminados correctamente")
+def delete_alumnos(request: HttpRequest):
+    if request.method == "POST":
+        if "si" in request.POST:
+            Alumno.objects.all().delete()
+            template = loader.get_template("index.html")
+            result = "Todos los alumnos han sido eliminados correctamente"
+            return HttpResponse(
+                template.render({"form": AlumnoForm(), "result": result}, request)
+            )
+        else:
+            return redirect("index")
+    else:
+        template = loader.get_template("confirm.html")
+        return HttpResponse(template.render({}, request))

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Confirmación</title>
+        <style>
+            .content {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                text-align: center;
+                }
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <h1>Confirmación</h1>
+            <p>¿Estás seguro de que quieres eliminar el registro de alumnos?</p>
+            <form method="post">
+                {% csrf_token %}
+                <input type="submit" name="si" value="Si">
+                <input type="submit" name="no" value="No">
+            </form>
+        </div>
+    </body>
+</html>

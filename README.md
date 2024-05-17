@@ -9,7 +9,7 @@ InnovaAssist es una simple WebApp para tomar asistencia en eventos. La idea es q
 Para instalar InnovaAssist, primero debes clonar el repositorio:
 
 ```bash
-git clone
+git clone https://github.com/Dyotson/InnovaAssist
 ```
 
 Luego, para instalar y correr InnovaAssist debes instalar [Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer) junto a [Python 3.12](https://www.python.org/downloads/). Una vez instalado, debes correr el siguiente comando en la carpeta raíz del proyecto:
