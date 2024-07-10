@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>InnovaAssist</title>
+        <title>BoxerCounter</title>
         <style>
             .content {
                 position: absolute;
@@ -15,9 +15,9 @@
     </head>
     <body>
         <div class="content">
-            <h1>InnovaAssist</h1>
-            <p>Conecta el lector de codigos y escanea la TUC para tomar la
-                asistencia</p>
+            <h1>BoxerCounter</h1>
+            <p>Conecta el lector de codigos y escanea el codigo de barras para
+                registrar la caja</p>
             <form method="post">
                 {% csrf_token %}
                 {{form.as_p}}
@@ -25,14 +25,14 @@
             </form>
             <form method="post" action="{% url 'export_alumnos' %}">
                 {% csrf_token %}
-                <input type="submit" value="Exportar Alumnos">
+                <input type="submit" value="Exportar Reporte">
             </form>
             {% if result %}
             <p>{{result}}</p>
             {% endif %}
             <form method="get" action="{% url 'delete_alumnos'%}">
                 {% csrf_token %}
-                <input type="submit" value="Borrar Alumnos">
+                <input type="submit" value="Borrar Registros">
             </form>
         </div>
     </body>
