@@ -1,28 +1,55 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Confirmación</title>
-        <style>
-            .content {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                -webkit-transform: translate(-50%, -50%);
-                transform: translate(-50%, -50%);
-                text-align: center;
-                }
-        </style>
-    </head>
-    <body>
-        <div class="content">
-            <h1>Confirmación</h1>
-            <p>¿Estás seguro de que quieres eliminar el registro de
-                personas?</p>
-            <form method="post">
-                {% csrf_token %}
-                <input type="submit" name="si" value="Si">
-                <input type="submit" name="no" value="No">
-            </form>
+  <head>
+    <title>Confirmación</title>
+    <style>
+      .content {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h1>Confirmación</h1>
+
+      {% if action == 'fix_duplicates' %}
+      <p>Se encontraron códigos duplicados que pueden fusionarse:</p>
+      {% if potential_duplicates %}
+      <div style="margin: 20px; text-align: left; display: inline-block">
+        {% for duplicate in potential_duplicates %}
+        <div style="margin: 10px 0; padding: 10px; border: 1px solid #ccc">
+          <strong>Código limpio:</strong> {{ duplicate.cleaned_code }}<br />
+          <strong>Códigos originales:</strong> {{
+          duplicate.original_codes|join:", " }}<br />
+          <strong>Total cajas:</strong> {{ duplicate.total_count }}<br />
+          <strong>Registros a fusionar:</strong> {{ duplicate.count }}
         </div>
-    </body>
+        {% endfor %}
+      </div>
+      <p>¿Quieres fusionar estos códigos duplicados?</p>
+      <form method="post">
+        {% csrf_token %}
+        <input type="submit" name="confirm_fix" value="Si, fusionar" />
+        <input type="submit" name="cancel" value="Cancelar" />
+      </form>
+      {% else %}
+      <p>No se encontraron códigos duplicados para fusionar.</p>
+      <form method="get" action="/">
+        <input type="submit" value="Volver al inicio" />
+      </form>
+      {% endif %} {% else %}
+      <p>¿Estás seguro de que quieres eliminar el registro de personas?</p>
+      <form method="post">
+        {% csrf_token %}
+        <input type="submit" name="si" value="Si" />
+        <input type="submit" name="no" value="No" />
+      </form>
+      {% endif %}
+    </div>
+  </body>
 </html>

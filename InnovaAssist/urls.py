@@ -17,11 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from main.views import index, export_alumnos, delete_alumnos
+from main.views import index, export_alumnos, delete_alumnos, fix_duplicate_codes
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", index, name="index"),
     path("export_alumnos/", export_alumnos, name="export_alumnos"),
     path("delete_alumnos/", delete_alumnos, name="delete_alumnos"),
+    path("fix_duplicates/", fix_duplicate_codes, name="fix_duplicates"),
 ]
